@@ -10,6 +10,9 @@ library(pracma)				# contains sigmoid function
 library(TrenchR)
 library(zoo)
 
+#+++++++++++++++++++++++++++++
+#Set up temperature and fitness data for experiments
+#++++++++++++++++++++++++++++
 #Analysis for English grain aphid, Sitobion avenae
 #Processes environmental and fitness component data for the following experiments:
 #Expt 1: vary min

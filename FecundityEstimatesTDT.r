@@ -1,8 +1,13 @@
+#+++++++++++++++++++++++++++++
+#Estimate fecundity incorporating TDT data
+#++++++++++++++++++++++++++++
+
 # ============================================================
 # Increasing-Variance Log-Logistic TDT Model
 # Direct adaptation of Bullard et al. (2026, PLOS Biology) code
 # https://github.com/gbullard87/Beyond_Mean_TDT_2025
 # ============================================================
+#bayesTLS https://daniel1noble.github.io/bayesTLS/#sec-aphids
 
 library(tidyverse)
 library(flexsurv)
@@ -12,7 +17,8 @@ library(survival)
 temps.all<- read.csv("processed_data/TempTimeSeries.csv")
 PerfDat<- read.csv("processed_data/PerformanceData.csv")
 
-aphid<-read.table("/Users/lbuckley/Library/CloudStorage/GoogleDrive-lbuckley@uw.edu/My\ Drive/Buckley/Work/AphidThermalTol/data/aphidTDT/Thermal\ death\ time\ analysis/surv.txt", header = T)
+#TDT Data from Li et al. 2023
+aphid<-read.table("processed_data/surv_Lietal.txt", header = T)
 aphid<-aphid%>%mutate(dur_h=dur/60)%>%within(.,spec<-factor(spec,levels = c("MD","SA","RP")),age<-factor(age,levels=c("2","6","12")))
 
 #rename treatment in expt 3
@@ -290,6 +296,7 @@ ggplot(temps.all, aes(x = time, y = cumsurv, color = treatment)) +
   geom_line() +
   theme_bw() + facet_wrap(.~expt, scales = "free_y")
 
+#plot all estimates
 ggplot(t.long[t.long$expt==1,], aes(x = time, y = value, color = treatment)) +
   geom_line() +
   facet_wrap(.~variable, scales = "free_y")+
